@@ -24,37 +24,36 @@ variable "database_subnet_cidr" {
 }
 
 variable "vpc_name" {
-  description = "Name of the Management VPC"
-  default     = "Management"
+  description = "Name of the VPC"
 }
 
 variable "public_subnet_name" {
-  description = "Name of the public subnet in the Management VPC"
+  description = "Name of the public subnet VPC"
   default     = "Public Subnet"
 }
 
 variable "container_subnet_name" {
-  description = "Name of the container subnet in the Management VPC"
+  description = "Name of the container subnet VPC"
   default     = "Container Subnet"
 }
 
 variable "non_container_subnet_name" {
-  description = "Name of the non-container subnet in the Management VPC"
+  description = "Name of the non-container subnet VPC"
   default     = "Non-container Subnet"
 }
 
 variable "database_subnet_name" {
-  description = "Name of the database subnet in the Management VPC"
+  description = "Name of the database subnet VPC"
   default     = "Database Subnet"
 }
 
 variable "ig_name" {
   description = "Internet Gateway name"
-  default     = "Management IG"
+  default     = ""
 }
 
 variable "route_table_name" {
-  description = "Management route table name"
-  default     = "Management route table"
+  description = "Route table name"
+  default     = ""
 }
 

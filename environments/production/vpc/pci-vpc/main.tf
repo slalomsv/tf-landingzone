@@ -14,6 +14,6 @@ module "prod_pci_vpc" {
 
 module "security_group_pci" {
   source = "../../../../modules/security-group/pci"
-  vpc_id = "${module.prod_open_vpc.vpc_id}"
+  vpc_id = "${module.prod_pci_vpc.vpc_id}"
 }
 
