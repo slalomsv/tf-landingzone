@@ -1,26 +1,31 @@
 variable "aws_region" {
-  description = "EC2 Region for the VPC"
+  description = "AWS Region"
   default = "us-west-2"
 }
 
 variable "vpc_name" {
   description = "Name of the management VPC"
-  default = "Management"
+  default = "management"
 }
 
 variable "vpc_cidr" {
-  description = "CIDR for the whole VPC"
-  default     = "10.0.0.0/16"
+  description = "CIDR for the VPC"
+  default     = "10.1.0.0/16"
 }
 
 variable "public_subnet_cidr" {
   description = "CIDR for the Public Subnet"
-  default     = "10.0.0.0/24"
+  default     = "10.1.1.0/24"
 }
 
 variable "security_subnet_cidr" {
   description = "CIDR for the Security Subnet"
-  default     = "10.0.1.0/24"
+  default     = "10.1.2.0/24"
+}
+
+variable "bastion_count" {
+  description = "The number of bastion hosts to deploy"
+  default     = 1
 }
 
 variable "bastion_key" {

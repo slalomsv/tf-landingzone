@@ -13,9 +13,10 @@ resource "aws_instance" "bastion" {
   subnet_id       = "${var.bastion_subnet}"
   key_name        = "${var.key_name}"
   security_groups = ["${var.security_group}"]
+  count           = "${var.count}"
   
   tags {
-    Name = "${var.bastion_name}"
+    Name = "terraform-${var.bastion_name}-${count.index + 1}"
   }
 }
 
