@@ -20,5 +20,6 @@ module "bastion_host" {
   key            = "${var.bastion_key}"
   security_group = "${module.security_group_ssh.security_group_id}"
   bastion_subnet = "${module.management_vpc.public_subnet_id}"
+  count          = "${var.bastion_count}"
 }
 

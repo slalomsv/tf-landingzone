@@ -34,3 +34,8 @@ variable "bastion_name" {
   default     = "Bastion Host"
 }
 
+variable "count" {
+  description = "The number of bastion hosts to deploy"
+  default     = 1
+}
+

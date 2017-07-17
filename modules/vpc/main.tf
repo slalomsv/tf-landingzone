@@ -71,18 +71,22 @@ resource "aws_eip" "eip" {
   depends_on = ["aws_internet_gateway.public_gateway"]
 }
 
-resource "aws_route_table" "public_route" {
+resource "aws_route_table" "public_table" {
   vpc_id         = "${aws_vpc.main.id}"
+
+  tags {
+    Name = "${var.route_table_name}"
+  }
 }
 
 resource "aws_route"  "public_route" {
-  route_table_id             = "${aws_route_table.public_route.id}"
+  route_table_id             = "${aws_route_table.public_table.id}"
   destination_cidr_block     = "0.0.0.0/0"
   gateway_id                 = "${aws_internet_gateway.public_gateway.id}"
 }
 
 resource "aws_route_table_association" "public" {
   subnet_id = "${aws_subnet.public.id}"
-  route_table_id = "${aws_route_table.public_route.id}"
+  route_table_id = "${aws_route_table.public_table.id}"
 }
 

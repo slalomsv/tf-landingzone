@@ -16,11 +16,11 @@ variable "container_subnet_cidr" {
 }
 
 variable "non_container_subnet_cidr" {
-  description = "CIDR block for the non-container subnet, e.g. 10.0.2.0/24"
+  description = "CIDR block for the non-container subnet, e.g. 10.0.3.0/24"
 }
 
 variable "database_subnet_cidr" {
-  description = "CIDR block for the database subnet, e.g. 10.0.2.0/24"
+  description = "CIDR block for the database subnet, e.g. 10.0.4.0/24"
 }
 
 variable "vpc_name" {

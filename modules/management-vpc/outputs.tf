@@ -19,6 +19,6 @@ output "eip_id" {
 }
 
 output "route_table_id" {
-  value = "${aws_route_table.public_route.id}"
+  value = "${aws_route_table.public_table.id}"
 }
 
