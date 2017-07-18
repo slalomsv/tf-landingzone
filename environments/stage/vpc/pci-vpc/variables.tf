@@ -4,32 +4,27 @@ variable "aws_region" {
 }
 
 variable "vpc_name" {
-  description = "Name of the PCI Open VPC"
+  description = "Name of the PCI VPC"
   default = "Staging PCI"
 }
 
 variable "vpc_cidr" {
-  description = "CIDR for the whole VPC"
+  description = "CIDR for the VPC"
   default     = "143.4.0.0/16"
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR for the Public Subnet"
+variable "dmz_subnet_cidr" {
+  description = "CIDR for the DMZ Subnet"
   default     = "143.4.1.0/24"
 }
 
-variable "container_subnet_cidr" {
-  description = "CIDR for the Container Subnet"
+variable "app_subnet_cidr" {
+  description = "CIDR for the Application Subnet"
   default     = "143.4.2.0/24"
 }
 
-variable "non_container_subnet_cidr" {
-  description = "CIDR for the Non-Container Subnet"
+variable "data_subnet_cidr" {
+  description = "CIDR for the Data Subnet"
   default     = "143.4.3.0/24"
-}
-
-variable "database_subnet_cidr" {
-  description = "CIDR for the Database Subnet"
-  default     = "143.4.4.0/24"
 }
 
