@@ -7,7 +7,7 @@ provider "aws" {
 ### Management ####
 ###################
 module "management_vpc" {
-  source = "../../infra/environments/management/vpc"
+  source = "../environments/management/vpc"
 }
 
 
@@ -15,11 +15,11 @@ module "management_vpc" {
 ### Production ###
 ##################
 module "prod_standard_vpc" {
-  source = "../../infra/environments/production/vpc/standard-vpc"
+  source = "../environments/production/vpc/standard-vpc"
 }
 
 module "prod_pci_vpc" {
-  source = "../../infra/environments/production/vpc/pci-vpc"
+  source = "../environments/production/vpc/pci-vpc"
 }
 
 module "prod_standard_to_pci_peering" {
@@ -35,11 +35,11 @@ module "prod_standard_to_pci_peering" {
 ### Staging ###
 ###############
 module "stage_standard_vpc" {
-  source = "../../infra/environments/stage/vpc/standard-vpc"
+  source = "../environments/stage/vpc/standard-vpc"
 }
 
 module "stage_pci_vpc" {
-  source = "../../infra/environments/stage/vpc/pci-vpc"
+  source = "../environments/stage/vpc/pci-vpc"
 }
 
 module "stage_standard_to_pci_peering" {
