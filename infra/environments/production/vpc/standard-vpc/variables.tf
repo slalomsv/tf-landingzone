@@ -4,8 +4,8 @@ variable "aws_region" {
 }
 
 variable "vpc_name" {
-  description = "Name of the Production Open VPC"
-  default = "Production Open Change Test"
+  description = "Name of the Production Standard VPC"
+  default = "Production Standard"
 }
 
 variable "vpc_cidr" {
