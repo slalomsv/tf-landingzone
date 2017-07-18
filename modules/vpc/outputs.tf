@@ -26,3 +26,7 @@ output "route_table_id" {
   value = "${aws_route_table.public_table.id}"
 }
 
+output "vpc_cidr" {
+  value = "${var.vpc_cidr}"
+}
+
