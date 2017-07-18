@@ -37,6 +37,6 @@ variable "ig_name" {
 
 variable "route_table_name" {
   description = "Management route table name"
-  default     = "Management route table"
+  default     = "Management"
 }
 

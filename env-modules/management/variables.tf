@@ -25,7 +25,7 @@ variable "security_subnet_cidr" {
 
 variable "bastion_count" {
   description = "The number of bastion hosts to deploy"
-  default     = 2
+  default     = 1
 }
 
 variable "bastion_key" {
