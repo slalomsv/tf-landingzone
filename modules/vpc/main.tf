@@ -18,40 +18,31 @@ resource "aws_vpc" "main" {
 ###############
 ### Subnets ###
 ###############
-resource "aws_subnet" "public" {
+resource "aws_subnet" "dmz" {
   vpc_id                  = "${aws_vpc.main.id}"
-  cidr_block              = "${var.public_subnet_cidr}"
+  cidr_block              = "${var.dmz_subnet_cidr}"
   map_public_ip_on_launch = true
 
   tags {
-    Name = "${var.public_subnet_name}"
+    Name = "${var.dmz_subnet_name}"
   }
 }
 
-resource "aws_subnet" "container" {
+resource "aws_subnet" "app" {
   vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.container_subnet_cidr}"
+  cidr_block = "${var.app_subnet_cidr}"
 
   tags {
-    Name = "${var.container_subnet_name}"
+    Name = "${var.app_subnet_name}"
   }
 }
 
-resource "aws_subnet" "non_container" {
+resource "aws_subnet" "data" {
   vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.non_container_subnet_cidr}"
+  cidr_block = "${var.data_subnet_cidr}"
 
   tags {
-    Name = "${var.non_container_subnet_name}"
-  }
-}
-
-resource "aws_subnet" "database" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.database_subnet_cidr}"
-
-  tags {
-    Name = "${var.database_subnet_name}"
+    Name = "${var.data_subnet_name}"
   }
 }
 
@@ -86,7 +77,7 @@ resource "aws_route"  "public_route" {
 }
 
 resource "aws_route_table_association" "public" {
-  subnet_id = "${aws_subnet.public.id}"
+  subnet_id = "${aws_subnet.dmz.id}"
   route_table_id = "${aws_route_table.public_table.id}"
 }
 

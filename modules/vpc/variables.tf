@@ -7,44 +7,35 @@ variable "vpc_cidr" {
   description = "CIDR block for the VPC, e.g. 10.0.0.0/16"
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR block for the public subnet, e.g. 10.0.1.0/24"
+variable "dmz_subnet_cidr" {
+  description = "CIDR block for the dmz subnet, e.g. 10.0.1.0/24"
 }
 
-variable "container_subnet_cidr" {
-  description = "CIDR block for the container subnet, e.g. 10.0.2.0/24"
+variable "app_subnet_cidr" {
+  description = "CIDR block for the app subnet, e.g. 10.0.2.0/24"
 }
 
-variable "non_container_subnet_cidr" {
-  description = "CIDR block for the non-container subnet, e.g. 10.0.3.0/24"
-}
-
-variable "database_subnet_cidr" {
-  description = "CIDR block for the database subnet, e.g. 10.0.4.0/24"
+variable "data_subnet_cidr" {
+  description = "CIDR block for the data subnet, e.g. 10.0.3.0/24"
 }
 
 variable "vpc_name" {
   description = "Name of the VPC"
 }
 
-variable "public_subnet_name" {
-  description = "Name of the public subnet VPC"
+variable "dmz_subnet_name" {
+  description = "Name of the DMZ subnet"
   default     = "Public Subnet"
 }
 
-variable "container_subnet_name" {
-  description = "Name of the container subnet VPC"
+variable "app_subnet_name" {
+  description = "Name of the Application subnet"
   default     = "Container Subnet"
 }
 
-variable "non_container_subnet_name" {
-  description = "Name of the non-container subnet VPC"
-  default     = "Non-container Subnet"
-}
-
-variable "database_subnet_name" {
-  description = "Name of the database subnet VPC"
-  default     = "Database Subnet"
+variable "data_subnet_name" {
+  description = "Name of the data subnet"
+  default     = "Data Subnet"
 }
 
 variable "ig_name" {
