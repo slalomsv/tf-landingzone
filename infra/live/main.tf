@@ -28,6 +28,7 @@ module "prod_standard_to_pci_peering" {
   vpc_name  = "${module.prod_standard_vpc.vpc_name}"
   peer_id   = "${module.prod_pci_vpc.vpc_id}"
   peer_name = "${module.prod_pci_vpc.vpc_name}"
+  peer_cidr = "${module.prod_pci_vpc.vpc_cidr}"
 }
 
 
@@ -48,5 +49,6 @@ module "stage_standard_to_pci_peering" {
   vpc_name  = "${module.stage_standard_vpc.vpc_name}"
   peer_id   = "${module.stage_pci_vpc.vpc_id}"
   peer_name = "${module.stage_pci_vpc.vpc_name}"
+  peer_cidr = "${module.stage_pci_vpc.vpc_cidr}"
 }
 

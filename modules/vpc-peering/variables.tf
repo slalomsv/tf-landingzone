@@ -19,3 +19,7 @@ variable "peer_id" {
   description = "ID of the VPC peer"
 }
 
+variable "peer_cidr" {
+  description = "CIDR block of the VPC peer"
+}
+
