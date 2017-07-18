@@ -2,8 +2,8 @@ provider "aws" {
     region = "${var.aws_region}"
 }
 
-module "stage_open_vpc" {
-  source           = "../../../../modules/vpc"
+module "stage_standard_vpc" {
+  source           = "../../../../../modules/vpc"
   vpc_name         = "${var.vpc_name}"
   vpc_cidr         = "${var.vpc_cidr}"
   dmz_subnet_cidr  = "${var.dmz_subnet_cidr}"
@@ -12,7 +12,7 @@ module "stage_open_vpc" {
 }
 
 module "security_group_public" {
-  source = "../../../../modules/security-group/public"
-  vpc_id = "${module.stage_open_vpc.vpc_id}"
+  source = "../../../../../modules/security-group/public"
+  vpc_id = "${module.stage_standard_vpc.vpc_id}"
 }
 
