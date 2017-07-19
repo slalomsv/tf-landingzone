@@ -1,18 +1,18 @@
 variable "aws_region" {
-  description = "AWS Region to launch the VPC and subnets"
+  description = "AWS Region"
   default     = "us-west-2"
 }
 
 variable "vpc_cidr" {
-  description = "CIDR block for the VPC, e.g. 10.0.0.0/16"
+  description = "CIDR block for the VPC"
 }
 
 variable "public_subnet_cidr" {
-  description = "CIDR block for the public subnet, e.g. 10.0.1.0/24"
+  description = "CIDR block for the public subnet"
 }
 
 variable "security_subnet_cidr" {
-  description = "CIDR block for the security subnet, e.g. 10.0.2.0/24"
+  description = "CIDR block for the security subnet"
 }
 
 variable "vpc_name" {
@@ -21,12 +21,12 @@ variable "vpc_name" {
 }
 
 variable "public_subnet_name" {
-  description = "Name of the public subnet in the Management VPC"
+  description = "Name of the public subnet"
   default     = "Public Subnet"
 }
 
 variable "security_subnet_name" {
-  description = "Name of the security subnet in the Management VPC"
+  description = "Name of the security subnet"
   default     = "Security Subnet"
 }
 

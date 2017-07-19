@@ -8,7 +8,7 @@ variable "vpc_id" {
 }
 
 variable "sg_name" {
-  description = "Security Grouo Name"
+  description = "Security Group Name"
   default     = "SSH"
 }
 

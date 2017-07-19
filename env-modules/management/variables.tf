@@ -1,5 +1,5 @@
 variable "aws_region" {
-  description = "EC2 Region for the VPC"
+  description = "AWS Region"
   default = "us-west-2"
 }
 
@@ -9,7 +9,7 @@ variable "vpc_name" {
 }
 
 variable "vpc_cidr" {
-  description = "CIDR for the whole VPC"
+  description = "CIDR for the VPC"
   default     = "143.0.0.0/16"
 }
 

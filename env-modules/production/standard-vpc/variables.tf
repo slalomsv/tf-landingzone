@@ -1,5 +1,5 @@
 variable "aws_region" {
-  description = "EC2 Region for the VPC"
+  description = "AWS Region"
   default = "us-west-2"
 }
 
