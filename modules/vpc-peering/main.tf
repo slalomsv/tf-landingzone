@@ -8,7 +8,7 @@ resource "aws_vpc_peering_connection" "main" {
   auto_accept = true
 
   tags {
-    Name = "${var.vpc_name} to ${var.peer_name}"
+    Name = "terraform-${var.vpc_name}-to-${var.peer_name}"
   }
 }
 
