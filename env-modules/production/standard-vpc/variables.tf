@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "vpc_name" {
   description = "Name of the Production Standard VPC"
-  default = "Production Standard"
+  default = "production-standard"
 }
 
 variable "vpc_cidr" {

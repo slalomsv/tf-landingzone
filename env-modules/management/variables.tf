@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "vpc_name" {
   description = "Name of the management VPC"
-  default = "Management"
+  default = "management"
 }
 
 variable "vpc_cidr" {

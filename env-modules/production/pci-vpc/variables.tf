@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "vpc_name" {
   description = "Name of the PCI VPC"
-  default = "Production PCI"
+  default = "production-pci"
 }
 
 variable "vpc_cidr" {

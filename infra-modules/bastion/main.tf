@@ -16,7 +16,7 @@ resource "aws_instance" "bastion" {
   count           = "${var.count}"
   
   tags {
-    Name = "${var.bastion_name}-${count.index + 1}"
+    Name = "terraform-${var.bastion_name}-${count.index + 1}"
   }
 }
 

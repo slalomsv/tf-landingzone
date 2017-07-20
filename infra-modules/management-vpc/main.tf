@@ -13,7 +13,7 @@ resource "aws_vpc" "management" {
   enable_dns_hostnames = true
   
   tags {
-    Name = "${var.vpc_name}"
+    Name = "terraform-${var.vpc_name}"
   }
 }
 
@@ -27,7 +27,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
   
   tags {
-    Name = "${var.public_subnet_name}"
+    Name = "terraform-${var.public_subnet_name}"
   }
 }
 
@@ -36,43 +36,63 @@ resource "aws_subnet" "security" {
   cidr_block = "${var.security_subnet_cidr}"
   
   tags {
-    Name = "${var.security_subnet_name}"
+    Name = "terraform-${var.security_subnet_name}"
   }
 }
 
 
-########################
-### Internet Gateway ###
-########################
-resource "aws_internet_gateway" "public_gateway" {
+###############
+### Routing ###
+###############
+resource "aws_eip" "main" {
+  vpc = true
+}
+
+
+### Public ###
+resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "${var.ig_name}"
+    Name = "terraform-${var.vpc_name}"
   }
 }
 
-resource "aws_eip" "eip" {
-  vpc        = true
-  depends_on = ["aws_internet_gateway.public_gateway"]
-}
-
-resource "aws_route_table" "main" {
+resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "${var.route_table_name}"
+    Name = "terraform-${var.vpc_name}-public"
   }
 }
 
 resource "aws_route" "public" {
-  route_table_id         = "${aws_route_table.main.id}"
+  route_table_id         = "${aws_route_table.public.id}"
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.public_gateway.id}"
+  gateway_id             = "${aws_internet_gateway.main.id}"
 }
 
 resource "aws_route_table_association" "public" {
   subnet_id      = "${aws_subnet.public.id}"
-  route_table_id = "${aws_route_table.main.id}"
+  route_table_id = "${aws_route_table.public.id}"
+}
+
+### NAT ###
+resource "aws_nat_gateway" "main" {
+  allocation_id = "${aws_eip.main.id}"
+  subnet_id     = "${aws_subnet.public.id}"
+}
+
+resource "aws_route_table" "nat" {
+  vpc_id = "${aws_vpc.management.id}"
+
+  tags {
+    Name = "terraform-${var.vpc_name}-nat"
+  }
+}
+
+resource "aws_route_table_association" "nat" {
+  subnet_id      = "${aws_subnet.public.id}"
+  route_table_id = "${aws_route_table.nat.id}"
 }
 

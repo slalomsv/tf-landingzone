@@ -31,7 +31,7 @@ variable "bastion_subnet" {
 
 variable "bastion_name" {
   description = "Name of the Bastion"
-  default     = "Bastion Host"
+  default     = "bastion"
 }
 
 variable "count" {

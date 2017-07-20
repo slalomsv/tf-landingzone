@@ -10,7 +10,11 @@ output "vpc_cidr" {
   value = "${var.vpc_cidr}"
 }
 
-output "route_table_id" {
-  value = "${module.management_vpc.route_table_id}"
+output "public_route_table_id" {
+  value = "${module.management_vpc.public_route_table_id}"
+}
+
+output "nat_route_table_id" {
+  value = "${module.management_vpc.nat_route_table_id}"
 }
 

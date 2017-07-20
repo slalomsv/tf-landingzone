@@ -25,26 +25,16 @@ variable "vpc_name" {
 
 variable "dmz_subnet_name" {
   description = "Name of the DMZ subnet"
-  default     = "Public Subnet"
+  default     = "public"
 }
 
 variable "app_subnet_name" {
   description = "Name of the Application subnet"
-  default     = "Container Subnet"
+  default     = "application"
 }
 
 variable "data_subnet_name" {
   description = "Name of the data subnet"
-  default     = "Data Subnet"
-}
-
-variable "ig_name" {
-  description = "Internet Gateway name"
-  default     = ""
-}
-
-variable "route_table_name" {
-  description = "Route table name"
-  default     = ""
+  default     = "data"
 }
 

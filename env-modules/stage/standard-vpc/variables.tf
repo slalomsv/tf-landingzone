@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "vpc_name" {
   description = "Name of the Staging Open VPC"
-  default = "Staging Open"
+  default = "staging-open"
 }
 
 variable "vpc_cidr" {

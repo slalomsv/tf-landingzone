@@ -12,7 +12,11 @@ variable "vpc_id" {
 }
 
 variable "route_table_id" {
-  description = "ID of the route table to assosiate the peering connection with"
+  description = "ID of the primary route table"
+}
+
+variable "peer_route_table_id" {
+  description = "ID of the peer route table"
 }
 
 variable "peer_name" {
@@ -23,7 +27,16 @@ variable "peer_id" {
   description = "ID of the VPC peer"
 }
 
+variable "vpc_cidr" {
+  description = "CIDR block of the primary VPC"
+}
+
 variable "peer_cidr" {
   description = "CIDR block of the VPC peer"
+}
+
+variable "bidirectional" {
+  description = "(Boolean) Enables/Disables bidirectional routing in the peering connection"
+  default     = false
 }
 

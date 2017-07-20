@@ -17,26 +17,16 @@ variable "security_subnet_cidr" {
 
 variable "vpc_name" {
   description = "Name of the Management VPC"
-  default     = "Management"
+  default     = "management"
 }
 
 variable "public_subnet_name" {
   description = "Name of the public subnet"
-  default     = "Public Subnet"
+  default     = "public"
 }
 
 variable "security_subnet_name" {
   description = "Name of the security subnet"
-  default     = "Security Subnet"
-}
-
-variable "ig_name" {
-  description = "Internet Gateway name"
-  default     = "Management IG"
-}
-
-variable "route_table_name" {
-  description = "Management route table name"
-  default     = "Management"
+  default     = "security"
 }
 
