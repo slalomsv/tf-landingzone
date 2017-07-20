@@ -2,6 +2,16 @@ provider "aws" {
   region = "${var.aws_region}"
 }
 
+# Export remote state management
+terraform {
+  backend "s3" {
+    bucket  = "tf-landingzone"
+    key     = "us-west-2/live-infra/vpc-peering/terraform.tfstate"
+    region  = "us-west-2"
+    encrypt = true
+  }
+}
+
 module "management_to_prod_standard_peering" {
   source              = "../infra-modules/vpc-peering"
   route_table_id      = "${module.management_vpc.public_route_table_id}"
