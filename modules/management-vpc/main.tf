@@ -83,16 +83,3 @@ resource "aws_nat_gateway" "main" {
   subnet_id     = "${aws_subnet.public.id}"
 }
 
-resource "aws_route_table" "nat" {
-  vpc_id = "${aws_vpc.management.id}"
-
-  tags {
-    Name = "terraform-${var.vpc_name}-nat"
-  }
-}
-
-resource "aws_route_table_association" "nat" {
-  subnet_id      = "${aws_subnet.public.id}"
-  route_table_id = "${aws_route_table.nat.id}"
-}
-

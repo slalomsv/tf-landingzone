@@ -54,6 +54,7 @@ resource "aws_eip" "main" {
   vpc        = true
 }
 
+
 ### Public ###
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
@@ -81,6 +82,7 @@ resource "aws_route_table_association" "public" {
   route_table_id = "${aws_route_table.public.id}"
 }
 
+
 ### NAT ###
 resource "aws_nat_gateway" "main" {
   allocation_id = "${aws_eip.main.id}"
@@ -105,6 +107,7 @@ resource "aws_route_table_association" "nat" {
   subnet_id      = "${aws_subnet.app.id}"
   route_table_id = "${aws_route_table.nat.id}"
 }
+
 
 ### Data ###
 resource "aws_route_table" "data" {

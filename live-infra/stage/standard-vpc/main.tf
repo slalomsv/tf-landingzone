@@ -6,7 +6,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket  = "tf-landingzone"
-    key     = "us-west-2/live-infra/production/standard-vpc/terraform.tfstate"
+    key     = "us-west-2/live-infra/stage/standard-vpc/terraform.tfstate"
     region  = "us-west-2"
     encrypt = true
   }
