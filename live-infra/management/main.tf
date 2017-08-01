@@ -31,12 +31,12 @@ module "management_vpc" {
 }
 
 module "security_group_ssh" {
-  source = "../../modules/security-group/ssh"
+  source = "../../modules/security-groups/ssh"
   vpc_id = "${module.management_vpc.vpc_id}"
 }
 
 module "security_group_public" {
-  source = "../../modules/security-group/public"
+  source = "../../modules/security-groups/public"
   vpc_id = "${module.management_vpc.vpc_id}"
 }
 

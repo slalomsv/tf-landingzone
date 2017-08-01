@@ -22,7 +22,7 @@ module "prod_standard_vpc" {
 }
 
 module "security_group_public" {
-  source = "../../../modules/security-group/public"
+  source = "../../../modules/security-groups/public"
   vpc_id = "${module.prod_standard_vpc.vpc_id}"
 }
 
