@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "public" {
-  name   = "${var.sg_name}"
+  name   = "terraform-${var.sg_name}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -48,9 +48,16 @@ resource "aws_security_group" "public" {
     protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
-  lifecycle {
-    create_before_destroy = true
+ 
+  egress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags {
+    Name = "terraform-${var.sg_name}"
   }
 }
 

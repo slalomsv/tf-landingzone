@@ -12,11 +12,22 @@ terraform {
   }
 }
 
+data "terraform_remote_state" "key_pairs" {
+  backend = "s3"
+  config {
+    bucket = "tf-landingzone"
+    key    = "us-west-2/live-infra/key-pairs/terraform.tfstate"
+    region = "us-west-2"
+  }
+}
+
 module "management_vpc" {
-  source               = "../../modules/management-vpc"
-  vpc_cidr             = "${var.vpc_cidr}"
-  public_subnet_cidr   = "${var.public_subnet_cidr}"
-  security_subnet_cidr = "${var.security_subnet_cidr}"
+  source                   = "../../modules/management-vpc"
+  vpc_cidr                 = "${var.vpc_cidr}"
+  public_subnet_1_cidr     = "${var.public_subnet_1_cidr}"
+  security_subnet_1_cidr   = "${var.security_subnet_1_cidr}"
+  public_subnet_2_cidr     = "${var.public_subnet_2_cidr}"
+  security_subnet_2_cidr   = "${var.security_subnet_2_cidr}"
 }
 
 module "security_group_ssh" {
@@ -24,12 +35,29 @@ module "security_group_ssh" {
   vpc_id = "${module.management_vpc.vpc_id}"
 }
 
-module "bastion_host" {
-  source         = "../../modules/bastion"
-  bastion_ami    = "${data.aws_ami.ubuntu.id}"
-  key            = "${var.bastion_key}"
-  security_group = "${module.security_group_ssh.security_group_id}"
-  bastion_subnet = "${module.management_vpc.public_subnet_id}"
-  count          = "${var.bastion_count}"
+module "security_group_public" {
+  source = "../../modules/security-group/public"
+  vpc_id = "${module.management_vpc.vpc_id}"
+}
+
+module "bastion_asg" {
+  source             = "../../modules/services/bastion"
+  key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
+  security_group_ids = "${module.security_group_ssh.security_group_id}"
+  asg_subnets        = "${module.management_vpc.public_subnet_1_id},${module.management_vpc.public_subnet_2_id}"
+  max_size           = "${var.bastion_max_size}"
+  desired_capacity   = "${var.bastion_desired_capacity}"
+  min_size           = "${var.bastion_min_size}"
+}
+
+module "example-ws" {
+  source             = "../../modules/services/example-webserver"
+  security_group_ids = "${module.security_group_public.security_group_id},${module.security_group_ssh.security_group_id}"
+  asg_subnets        = "${module.management_vpc.security_subnet_1_id},${module.management_vpc.security_subnet_2_id}"
+  elb_subnets        = "${module.management_vpc.public_subnet_1_id},${module.management_vpc.public_subnet_2_id}"
+  key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
+  max_size           = 3
+  desired_capacity   = 2
+  min_size           = 1
 }
 
