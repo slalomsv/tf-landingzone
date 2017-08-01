@@ -28,7 +28,7 @@ resource "aws_launch_configuration" "config" {
   name            = "${var.config_name}"
   image_id        = "${data.aws_ami.amazon_linux.id}"
   instance_type   = "${var.instance_type}"
-  security_groups = ["${split(",", var.security_group_ids)}"]
+  security_groups = ["${split(",", var.lc_security_groups)}"]
   user_data       = "${file("${path.module}/user-data.sh")}"
   key_name        = "${var.key_name}"
 
@@ -45,8 +45,8 @@ data "aws_availability_zones" "available" {}
 
 resource "aws_elb" "elb" {
   name               = "${var.elb_name}"
-  #availability_zones = ["${data.aws_availability_zones.available.names}"]
   subnets            = ["${split(",", var.elb_subnets)}"]
+  security_groups    = ["${split(",", var.elb_security_groups)}"]
   
   listener {
     instance_port     = 80

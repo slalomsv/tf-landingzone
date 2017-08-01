@@ -40,6 +40,11 @@ module "security_group_public" {
   vpc_id = "${module.management_vpc.vpc_id}"
 }
 
+module "security_group_elb" {
+  source = "../../modules/security-groups/elb"
+  vpc_id = "${module.management_vpc.vpc_id}"
+}
+
 module "bastion_asg" {
   source             = "../../modules/services/bastion"
   key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
@@ -51,13 +56,14 @@ module "bastion_asg" {
 }
 
 module "example-ws" {
-  source             = "../../modules/services/example-webserver"
-  security_group_ids = "${module.security_group_public.security_group_id},${module.security_group_ssh.security_group_id}"
-  asg_subnets        = "${module.management_vpc.security_subnet_1_id},${module.management_vpc.security_subnet_2_id}"
-  elb_subnets        = "${module.management_vpc.public_subnet_1_id},${module.management_vpc.public_subnet_2_id}"
-  key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
-  max_size           = 3
-  desired_capacity   = 2
-  min_size           = 1
+  source              = "../../modules/services/example-webserver"
+  lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh.security_group_id}"
+  elb_security_groups = "${module.security_group_elb.security_group_id}"
+  asg_subnets         = "${module.management_vpc.security_subnet_1_id},${module.management_vpc.security_subnet_2_id}"
+  elb_subnets         = "${module.management_vpc.public_subnet_1_id},${module.management_vpc.public_subnet_2_id}"
+  key_name            = "${data.terraform_remote_state.key_pairs.main_key_name}"
+  max_size            = 3
+  desired_capacity    = 2
+  min_size            = 1
 }
 

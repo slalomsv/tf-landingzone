@@ -39,8 +39,8 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "security_group_ids" {
-  description = "Security Groups for the instances"
+variable "lc_security_groups" {
+  description = "Security Groups for the launch configuration"
 }
 
 variable "asg_subnets" {
@@ -68,6 +68,10 @@ variable "elb_name" {
 
 variable "elb_subnets" {
   description = "Subnets to attach the ELB to"
+}
+
+variable "elb_security_groups" {
+  description = "Security Groups to assign to the ELB"
 }
 
 variable "health_interval" {
