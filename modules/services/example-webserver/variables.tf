@@ -19,6 +19,10 @@ data "aws_ami" "amazon_linux" {
   owners = ["amazon"]
 }
 
+variable "vpc_name" {
+  description = "VPC name used for resource naming"
+}
+
 ### ASG and Launch Config ###
 variable "asg_name" {
   description = "ASG Name"

@@ -18,10 +18,14 @@ resource "aws_vpc" "main" {
 ###############
 ### Subnets ###
 ###############
+data "aws_availability_zones" "available" {}
+
 resource "aws_subnet" "dmz1" {
-  vpc_id                  = "${aws_vpc.main.id}"
-  cidr_block              = "${var.dmz_subnet_1_cidr}"
-  map_public_ip_on_launch = true
+  vpc_id                          = "${aws_vpc.main.id}"
+  cidr_block                      = "${var.dmz_subnet_1_cidr}"
+  availability_zone               = "${data.aws_availability_zones.available.names[0]}"
+  map_public_ip_on_launch         = true
+  assign_ipv6_address_on_creation = false
 
   tags {
     Name = "tf-${var.dmz_subnet_name}-1"
@@ -29,9 +33,11 @@ resource "aws_subnet" "dmz1" {
 }
 
 resource "aws_subnet" "dmz2" {
-  vpc_id                  = "${aws_vpc.main.id}"
-  cidr_block              = "${var.dmz_subnet_2_cidr}"
-  map_public_ip_on_launch = true
+  vpc_id                          = "${aws_vpc.main.id}"
+  cidr_block                      = "${var.dmz_subnet_2_cidr}"
+  availability_zone               = "${data.aws_availability_zones.available.names[1]}"
+  map_public_ip_on_launch         = true
+  assign_ipv6_address_on_creation = false
 
   tags {
     Name = "tf-${var.dmz_subnet_name}-2"
@@ -39,8 +45,11 @@ resource "aws_subnet" "dmz2" {
 }
 
 resource "aws_subnet" "app1" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.app_subnet_1_cidr}"
+  vpc_id                          = "${aws_vpc.main.id}"
+  cidr_block                      = "${var.app_subnet_1_cidr}"
+  availability_zone               = "${data.aws_availability_zones.available.names[0]}"
+  map_public_ip_on_launch         = false
+  assign_ipv6_address_on_creation = false
 
   tags {
     Name = "tf-${var.app_subnet_name}-1"
@@ -48,8 +57,11 @@ resource "aws_subnet" "app1" {
 }
 
 resource "aws_subnet" "app2" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.app_subnet_2_cidr}"
+  vpc_id                          = "${aws_vpc.main.id}"
+  cidr_block                      = "${var.app_subnet_2_cidr}"
+  availability_zone               = "${data.aws_availability_zones.available.names[1]}"
+  map_public_ip_on_launch         = false
+  assign_ipv6_address_on_creation = false
 
   tags {
     Name = "tf-${var.app_subnet_name}-2"
@@ -57,8 +69,11 @@ resource "aws_subnet" "app2" {
 }
 
 resource "aws_subnet" "data1" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.data_subnet_1_cidr}"
+  vpc_id                          = "${aws_vpc.main.id}"
+  cidr_block                      = "${var.data_subnet_1_cidr}"
+  availability_zone               = "${data.aws_availability_zones.available.names[0]}"
+  map_public_ip_on_launch         = false
+  assign_ipv6_address_on_creation = false
 
   tags {
     Name = "tf-${var.data_subnet_name}-1"
@@ -66,8 +81,11 @@ resource "aws_subnet" "data1" {
 }
 
 resource "aws_subnet" "data2" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${var.data_subnet_2_cidr}"
+  vpc_id                          = "${aws_vpc.main.id}"
+  cidr_block                      = "${var.data_subnet_2_cidr}"
+  availability_zone               = "${data.aws_availability_zones.available.names[1]}"
+  map_public_ip_on_launch         = false
+  assign_ipv6_address_on_creation = false
 
   tags {
     Name = "tf-${var.data_subnet_name}-2"

@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "public" {
-  name   = "tf-${var.sg_name}"
+  name   = "tf-${var.vpc_name}-${var.sg_name}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -57,7 +57,7 @@ resource "aws_security_group" "public" {
   }
 
   tags {
-    Name = "tf-${var.sg_name}"
+    Name = "tf-${var.vpc_name}-${var.sg_name}"
   }
 }
 

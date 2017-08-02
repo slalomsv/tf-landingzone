@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "vpc_name" {
   description = "Name of the Production Standard VPC"
-  default = "production-standard"
+  default = "prod-std"
 }
 
 variable "vpc_cidr" {
@@ -45,16 +45,16 @@ variable "data_subnet_2_cidr" {
 
 variable "example_ws_asg_name" {
   description = "Name of the ASG belonging to the example webserver"
-  default     = "prod-standard-ws-example"
+  default     = "ws-example"
 }
 
 variable "example_ws_elb_name" {
   description = "Name of the ELB belonging to the example webserver"
-  default     = "prod-standard-ws-example"
+  default     = "ws-example"
 }
 
 variable "example_ws_lc_name" {
   description = "Name of the Launch Configuration for the example webserver"
-  default     = "prod-standard-ws-example"
+  default     = "ws-example"
 }
 

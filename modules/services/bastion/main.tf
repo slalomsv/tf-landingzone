@@ -7,7 +7,7 @@ provider "aws" {
 #############################
 resource "aws_autoscaling_group" "bastion" {
   vpc_zone_identifier       = ["${split(",", var.asg_subnets)}"]
-  name_prefix               = "${var.asg_name}-"
+  name_prefix               = "tf-${var.vpc_name}-${var.asg_name}-"
   max_size                  = "${var.max_size}"
   min_size                  = "${var.min_size}"
   desired_capacity          = "${var.desired_capacity}"
@@ -18,13 +18,13 @@ resource "aws_autoscaling_group" "bastion" {
 
   tag {
     key                 = "Name"
-    value               = "tf-${var.asg_name}"
+    value               = "tf-${var.vpc_name}-${var.asg_name}"
     propagate_at_launch = true
   }
 }
 
 resource "aws_launch_configuration" "config" {
-  name            = "${var.config_name}"
+  name_prefix     = "tf-${var.vpc_name}-${var.config_name}-"
   image_id        = "${data.aws_ami.amazon_linux.id}"
   instance_type   = "${var.instance_type}"
   security_groups = ["${split(",", var.security_group_ids)}"]

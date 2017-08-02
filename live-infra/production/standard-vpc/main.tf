@@ -28,9 +28,9 @@ data "terraform_remote_state" "key_pairs" {
 ### VPC ###
 ###########
 module "prod_standard_vpc" {
-  source           = "../../../modules/vpc"
-  vpc_name         = "${var.vpc_name}"
-  vpc_cidr         = "${var.vpc_cidr}"
+  source             = "../../../modules/vpc"
+  vpc_name           = "${var.vpc_name}"
+  vpc_cidr           = "${var.vpc_cidr}"
   dmz_subnet_1_cidr  = "${var.dmz_subnet_1_cidr}"
   dmz_subnet_2_cidr  = "${var.dmz_subnet_2_cidr}"
   app_subnet_1_cidr  = "${var.app_subnet_1_cidr}"
@@ -44,18 +44,21 @@ module "prod_standard_vpc" {
 ### Security Groups ###
 #######################
 module "security_group_public" {
-  source = "../../../modules/security-groups/public"
-  vpc_id = "${module.prod_standard_vpc.vpc_id}"
+  source   = "../../../modules/security-groups/public"
+  vpc_name = "${var.vpc_name}"
+  vpc_id   = "${module.prod_standard_vpc.vpc_id}"
 }
 
 module "security_group_ssh" {
-  source = "../../../modules/security-groups/ssh"
-  vpc_id = "${module.prod_standard_vpc.vpc_id}"
+  source   = "../../../modules/security-groups/ssh"
+  vpc_name = "${var.vpc_name}"
+  vpc_id   = "${module.prod_standard_vpc.vpc_id}"
 }
 
 module "security_group_elb" {
-  source = "../../../modules/security-groups/elb"
-  vpc_id = "${module.prod_standard_vpc.vpc_id}"
+  source   = "../../../modules/security-groups/elb"
+  vpc_name = "${var.vpc_name}"
+  vpc_id   = "${module.prod_standard_vpc.vpc_id}"
 }
 
 
@@ -64,6 +67,7 @@ module "security_group_elb" {
 ################
 module "example-ws" {
   source              = "../../../modules/services/example-webserver"
+  vpc_name            = "${module.prod_standard_vpc.vpc_name}"
   elb_name            = "${var.example_ws_elb_name}"
   asg_name            = "${var.example_ws_asg_name}"
   lc_name             = "${var.example_ws_lc_name}"

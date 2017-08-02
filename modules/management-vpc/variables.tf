@@ -3,9 +3,24 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
+variable "vpc_name" {
+  description = "Name of the Management VPC"
+  default     = "mgmt"
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   default     = "10.0.0.0/16"
+}
+
+variable "public_subnet_name" {
+  description = "Name of the public subnet"
+  default     = "public"
+}
+
+variable "security_subnet_name" {
+  description = "Name of the security subnet"
+  default     = "security"
 }
 
 variable "public_subnet_1_cidr" {
@@ -26,20 +41,5 @@ variable "security_subnet_1_cidr" {
 variable "security_subnet_2_cidr" {
   description = "CIDR block for the second security subnet"
   default     = "10.0.4.0/16"
-}
-
-variable "vpc_name" {
-  description = "Name of the Management VPC"
-  default     = "management"
-}
-
-variable "public_subnet_name" {
-  description = "Name of the public subnet"
-  default     = "public"
-}
-
-variable "security_subnet_name" {
-  description = "Name of the security subnet"
-  default     = "security"
 }
 

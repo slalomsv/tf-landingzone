@@ -32,7 +32,7 @@ resource "aws_subnet" "public1" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.public_subnet_name}"
+    Name = "tf-${var.public_subnet_name}-1"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "security1" {
   assign_ipv6_address_on_creation = false
   
   tags {
-    Name = "tf-${var.security_subnet_name}"
+    Name = "tf-${var.security_subnet_name}-1"
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_subnet" "public2" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.public_subnet_name}"
+    Name = "tf-${var.public_subnet_name}-2"
   }
 }
 
@@ -68,10 +68,9 @@ resource "aws_subnet" "security2" {
   assign_ipv6_address_on_creation = false
   
   tags {
-    Name = "tf-${var.security_subnet_name}"
+    Name = "tf-${var.security_subnet_name}-2"
   }
 }
-
 
 
 ###############

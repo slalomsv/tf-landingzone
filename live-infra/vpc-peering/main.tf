@@ -2,7 +2,9 @@ provider "aws" {
   region = "${var.aws_region}"
 }
 
-# Export remote state management
+###############################
+### Remote State Management ###
+###############################
 terraform {
   backend "s3" {
     bucket  = "tf-landingzone"
@@ -12,9 +14,6 @@ terraform {
   }
 }
 
-####################
-### Data Sources ###
-####################
 data "terraform_remote_state" "management" {
   backend = "s3"
   config {
@@ -77,6 +76,7 @@ module "management_to_prod_standard_peering" {
   bidirectional       = true
 }
 
+/*
 module "management_to_prod_pci_peering" {
   source              = "../../modules/vpc-peering"
   route_table_id      = "${data.terraform_remote_state.management.public_route_table_id}"
@@ -115,4 +115,4 @@ module "management_to_stage_pci_peering" {
   peer_cidr           = "${data.terraform_remote_state.stage_pci.vpc_cidr}"
   bidirectional       = true
 }
-
+*/

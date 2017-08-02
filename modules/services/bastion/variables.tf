@@ -19,6 +19,10 @@ data "aws_ami" "amazon_linux" {
   owners = ["amazon"]
 }
 
+variable "vpc_name" {
+  description = "Name of the VPC used for resource naming"
+}
+
 variable "key_name" {
   description = "SSH Keypair Name"
 }

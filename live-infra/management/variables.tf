@@ -4,8 +4,8 @@ variable "aws_region" {
 }
 
 variable "vpc_name" {
-  description = "Name of the management VPC"
-  default     = "management"
+  description = "Name of the VPC"
+  default     = "mgmt"
 }
 
 variable "vpc_cidr" {
@@ -55,16 +55,16 @@ variable "bastion_min_size" {
 
 variable "example_ws_asg_name" {
   description = "Name of the ASG belonging to the example webserver"
-  default     = "management-ws-example"
+  default     = "ws-example"
 }
 
 variable "example_ws_elb_name" {
   description = "Name of the ELB belonging to the example webserver"
-  default     = "management-ws-example"
+  default     = "ws-example"
 }
 
 variable "example_ws_lc_name" {
   description = "Name of the Launch Configuration for the example webserver"
-  default     = "management-ws-example"
+  default     = "ws-example"
 }
 

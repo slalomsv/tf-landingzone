@@ -2,6 +2,10 @@ output "vpc_id" {
   value = "${aws_vpc.management.id}"
 }
 
+output "vpc_name" {
+  value = "${var.vpc_name}"
+}
+
 output "public_subnet_1_id" {
   value = "${aws_subnet.public1.id}"
 }
