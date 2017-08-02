@@ -33,23 +33,13 @@ variable "vpc_name" {
   default     = "management"
 }
 
-variable "public_subnet_1_name" {
+variable "public_subnet_name" {
   description = "Name of the public subnet"
-  default     = "public-1"
+  default     = "public"
 }
 
-variable "security_subnet_1_name" {
+variable "security_subnet_name" {
   description = "Name of the security subnet"
-  default     = "security-1"
-}
-
-variable "public_subnet_2_name" {
-  description = "Name of the public subnet"
-  default     = "public-2"
-}
-
-variable "security_subnet_2_name" {
-  description = "Name of the security subnet"
-  default     = "security-2"
+  default     = "security"
 }
 

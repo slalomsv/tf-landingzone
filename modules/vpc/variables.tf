@@ -7,16 +7,28 @@ variable "vpc_cidr" {
   description = "CIDR block for the VPC"
 }
 
-variable "dmz_subnet_cidr" {
-  description = "CIDR block for the dmz subnet"
+variable "dmz_subnet_1_cidr" {
+  description = "CIDR block for dmz subnet 1"
 }
 
-variable "app_subnet_cidr" {
-  description = "CIDR block for the application subnet"
+variable "dmz_subnet_2_cidr" {
+  description = "CIDR block for dmz subnet 2"
 }
 
-variable "data_subnet_cidr" {
-  description = "CIDR block for the data subnet"
+variable "app_subnet_1_cidr" {
+  description = "CIDR block for application subnet 1"
+}
+
+variable "app_subnet_2_cidr" {
+  description = "CIDR block for application subnet 2"
+}
+
+variable "data_subnet_1_cidr" {
+  description = "CIDR block for data subnet 1"
+}
+
+variable "data_subnet_2_cidr" {
+  description = "CIDR block for data subnet 2"
 }
 
 variable "vpc_name" {

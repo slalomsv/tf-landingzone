@@ -14,7 +14,7 @@ resource "aws_vpc" "management" {
   enable_dns_hostnames             = true
 
   tags {
-    Name = "terraform-${var.vpc_name}"
+    Name = "tf-${var.vpc_name}"
   }
 }
 
@@ -32,7 +32,7 @@ resource "aws_subnet" "public1" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "terraform-${var.public_subnet_1_name}"
+    Name = "tf-${var.public_subnet_name}"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "security1" {
   assign_ipv6_address_on_creation = false
   
   tags {
-    Name = "terraform-${var.security_subnet_1_name}"
+    Name = "tf-${var.security_subnet_name}"
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_subnet" "public2" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "terraform-${var.public_subnet_2_name}"
+    Name = "tf-${var.public_subnet_name}"
   }
 }
 
@@ -68,7 +68,7 @@ resource "aws_subnet" "security2" {
   assign_ipv6_address_on_creation = false
   
   tags {
-    Name = "terraform-${var.security_subnet_2_name}"
+    Name = "tf-${var.security_subnet_name}"
   }
 }
 
@@ -83,7 +83,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "terraform-${var.vpc_name}"
+    Name = "tf-${var.vpc_name}"
   }
 }
 
@@ -91,7 +91,7 @@ resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "terraform-${var.vpc_name}-public"
+    Name = "tf-${var.vpc_name}-public"
   }
 }
 
@@ -127,7 +127,7 @@ resource "aws_route_table" "nat" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "terraform-${var.vpc_name}-nat"
+    Name = "tf-${var.vpc_name}-nat"
   }
 }
 

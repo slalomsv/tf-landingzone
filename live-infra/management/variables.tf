@@ -53,3 +53,18 @@ variable "bastion_min_size" {
   default     = 1
 }
 
+variable "example_ws_asg_name" {
+  description = "Name of the ASG belonging to the example webserver"
+  default     = "management-ws-example"
+}
+
+variable "example_ws_elb_name" {
+  description = "Name of the ELB belonging to the example webserver"
+  default     = "management-ws-example"
+}
+
+variable "example_ws_lc_name" {
+  description = "Name of the Launch Configuration for the example webserver"
+  default     = "management-ws-example"
+}
+

@@ -29,9 +29,8 @@ variable "key_name" {
   description = "SSH key for the instances"
 }
 
-variable "config_name" {
+variable "lc_name" {
   description = "The name of the Launch Configuration"
-  default     = "web-example"
 }
 
 variable "instance_type" {
@@ -63,7 +62,6 @@ variable "desired_capacity" {
 ### ELB ###
 variable "elb_name" {
   description = "Name of the ELB"
-  default     = "ws-example"
 }
 
 variable "elb_subnets" {

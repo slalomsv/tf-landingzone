@@ -19,13 +19,13 @@ resource "aws_autoscaling_group" "ws_asg" {
 
   tag {
     key                 = "Name"
-    value               = "terraform-${var.asg_name}"
+    value               = "tf-${var.asg_name}"
     propagate_at_launch = true
   }
 }
 
 resource "aws_launch_configuration" "config" {
-  name            = "${var.config_name}"
+  name_prefix     = "${var.lc_name}-"
   image_id        = "${data.aws_ami.amazon_linux.id}"
   instance_type   = "${var.instance_type}"
   security_groups = ["${split(",", var.lc_security_groups)}"]
@@ -69,7 +69,7 @@ resource "aws_elb" "elb" {
   connection_draining_timeout = 400
   
   tags {
-    Name = "terraform-${var.elb_name}"
+    Name = "tf-${var.elb_name}"
   }
 }
 

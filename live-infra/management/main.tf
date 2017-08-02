@@ -2,7 +2,9 @@ provider "aws" {
     region = "${var.aws_region}"
 }
 
-# Export remote state management
+###############################
+### Remote State Management ###
+###############################
 terraform {
   backend "s3" {
     bucket  = "tf-landingzone"
@@ -21,6 +23,10 @@ data "terraform_remote_state" "key_pairs" {
   }
 }
 
+
+###########
+### VPC ###
+###########
 module "management_vpc" {
   source                   = "../../modules/management-vpc"
   vpc_cidr                 = "${var.vpc_cidr}"
@@ -30,6 +36,10 @@ module "management_vpc" {
   security_subnet_2_cidr   = "${var.security_subnet_2_cidr}"
 }
 
+
+#######################
+### Security Groups ###
+#######################
 module "security_group_ssh" {
   source = "../../modules/security-groups/ssh"
   vpc_id = "${module.management_vpc.vpc_id}"
@@ -45,6 +55,10 @@ module "security_group_elb" {
   vpc_id = "${module.management_vpc.vpc_id}"
 }
 
+
+################
+### Services ###
+################
 module "bastion_asg" {
   source             = "../../modules/services/bastion"
   key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
@@ -55,8 +69,11 @@ module "bastion_asg" {
   min_size           = "${var.bastion_min_size}"
 }
 
-module "example-ws" {
+module "example_ws" {
   source              = "../../modules/services/example-webserver"
+  elb_name            = "${var.example_ws_elb_name}"
+  asg_name            = "${var.example_ws_asg_name}"
+  lc_name             = "${var.example_ws_lc_name}" 
   lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh.security_group_id}"
   elb_security_groups = "${module.security_group_elb.security_group_id}"
   asg_subnets         = "${module.management_vpc.security_subnet_1_id},${module.management_vpc.security_subnet_2_id}"

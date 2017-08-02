@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "public" {
-  name   = "terraform-${var.sg_name}"
+  name   = "tf-${var.sg_name}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
@@ -57,7 +57,7 @@ resource "aws_security_group" "public" {
   }
 
   tags {
-    Name = "terraform-${var.sg_name}"
+    Name = "tf-${var.sg_name}"
   }
 }
 
