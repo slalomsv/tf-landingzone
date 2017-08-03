@@ -65,7 +65,18 @@ module "security_group_elb" {
 ################
 ### Services ###
 ################
-module "example-ws" {
+module "bastion_asg" {
+  source             = "../../../modules/services/bastion"
+  vpc_name           = "${module.prod_standard_vpc.vpc_name}"
+  key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
+  security_group_ids = "${module.security_group_ssh.security_group_id}"
+  asg_subnets        = "${module.prod_standard_vpc.dmz_subnet_1_id},${module.prod_standard_vpc.dmz_subnet_2_id}"
+  max_size           = 3
+  desired_capacity   = 2
+  min_size           = 1
+}
+
+module "example_ws" {
   source              = "../../../modules/services/example-webserver"
   vpc_name            = "${module.prod_standard_vpc.vpc_name}"
   elb_name            = "${var.example_ws_elb_name}"

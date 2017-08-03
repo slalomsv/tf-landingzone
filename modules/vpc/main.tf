@@ -28,7 +28,7 @@ resource "aws_subnet" "dmz1" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.dmz_subnet_name}-1"
+    Name = "tf-${var.vpc_name}-${var.dmz_subnet_name}-1"
   }
 }
 
@@ -40,7 +40,7 @@ resource "aws_subnet" "dmz2" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.dmz_subnet_name}-2"
+    Name = "tf-${var.vpc_name}-${var.dmz_subnet_name}-2"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_subnet" "app1" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.app_subnet_name}-1"
+    Name = "tf-${var.vpc_name}-${var.app_subnet_name}-1"
   }
 }
 
@@ -64,7 +64,7 @@ resource "aws_subnet" "app2" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.app_subnet_name}-2"
+    Name = "tf-${var.vpc_name}-${var.app_subnet_name}-2"
   }
 }
 
@@ -76,7 +76,7 @@ resource "aws_subnet" "data1" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.data_subnet_name}-1"
+    Name = "tf-${var.vpc_name}-${var.data_subnet_name}-1"
   }
 }
 
@@ -88,7 +88,7 @@ resource "aws_subnet" "data2" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.data_subnet_name}-2"
+    Name = "tf-${var.vpc_name}-${var.data_subnet_name}-2"
   }
 }
 
@@ -110,7 +110,7 @@ resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags {
-    Name = "tf-${var.vpc_name}-public"
+    Name = "tf-${var.vpc_name}-dmz"
   }
 }
 
@@ -134,18 +134,20 @@ resource "aws_route_table_association" "dmz2" {
 ### NAT ###
 resource "aws_eip" "main" {
   vpc        = true
+  depends_on = ["aws_internet_gateway.main"]
 }
 
 resource "aws_nat_gateway" "main" {
   allocation_id = "${aws_eip.main.id}"
-  subnet_id     = "${aws_subnet.app1.id}"
+  subnet_id     = "${aws_subnet.dmz1.id}"
+  depends_on    = ["aws_internet_gateway.main"]
 }
   
 resource "aws_route_table" "nat" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags {
-    Name = "tf-${var.vpc_name}-nat"
+    Name = "tf-${var.vpc_name}-app"
   }
 }
 

@@ -37,7 +37,7 @@ variable "vpc_name" {
 
 variable "dmz_subnet_name" {
   description = "Name of the DMZ subnet"
-  default     = "public"
+  default     = "dmz"
 }
 
 variable "app_subnet_name" {

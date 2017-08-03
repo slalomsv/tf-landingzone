@@ -32,7 +32,7 @@ resource "aws_subnet" "public1" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.public_subnet_name}-1"
+    Name = "tf-${var.vpc_name}-${var.public_subnet_name}-1"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "security1" {
   assign_ipv6_address_on_creation = false
   
   tags {
-    Name = "tf-${var.security_subnet_name}-1"
+    Name = "tf-${var.vpc_name}-${var.security_subnet_name}-1"
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_subnet" "public2" {
   assign_ipv6_address_on_creation = false
 
   tags {
-    Name = "tf-${var.public_subnet_name}-2"
+    Name = "tf-${var.vpc_name}-${var.public_subnet_name}-2"
   }
 }
 
@@ -68,7 +68,7 @@ resource "aws_subnet" "security2" {
   assign_ipv6_address_on_creation = false
   
   tags {
-    Name = "tf-${var.security_subnet_name}-2"
+    Name = "tf-${var.vpc_name}-${var.security_subnet_name}-2"
   }
 }
 
@@ -82,7 +82,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "tf-${var.vpc_name}"
+    Name = "tf-${var.vpc_name}-${var.vpc_name}"
   }
 }
 
@@ -126,7 +126,7 @@ resource "aws_route_table" "nat" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "tf-${var.vpc_name}-nat"
+    Name = "tf-${var.vpc_name}-private"
   }
 }
 

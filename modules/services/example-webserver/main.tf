@@ -44,7 +44,7 @@ resource "aws_launch_configuration" "config" {
 data "aws_availability_zones" "available" {}
 
 resource "aws_elb" "elb" {
-  name               = "tf-${var.vpc_name}-${var.elb_name}"
+  name_prefix        = "tf-" # 6 character max
   subnets            = ["${split(",", var.elb_subnets)}"]
   security_groups    = ["${split(",", var.elb_security_groups)}"]
   
