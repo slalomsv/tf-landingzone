@@ -4,8 +4,8 @@ variable "aws_region" {
 }
 
 variable "vpc_name" {
-  description = "Name of the Staging Open VPC"
-  default = "staging-standard"
+  description = "Name of the Stage Standard VPC"
+  default = "stage-std"
 }
 
 variable "vpc_cidr" {
@@ -13,18 +13,48 @@ variable "vpc_cidr" {
   default     = "10.3.0.0/16"
 }
 
-variable "dmz_subnet_cidr" {
+variable "dmz_subnet_1_cidr" {
   description = "CIDR for the DMZ Subnet"
   default     = "10.3.1.0/24"
 }
 
-variable "app_subnet_cidr" {
-  description = "CIDR for the Application Subnet"
+variable "dmz_subnet_2_cidr" {
+  description = "CIDR for the DMZ Subnet"
   default     = "10.3.2.0/24"
 }
 
-variable "data_subnet_cidr" {
-  description = "CIDR for the Database Subnet"
+variable "app_subnet_1_cidr" {
+  description = "CIDR for the Application Subnet"
   default     = "10.3.3.0/24"
+}
+
+variable "app_subnet_2_cidr" {
+  description = "CIDR for the Application Subnet"
+  default     = "10.3.4.0/24"
+}
+
+variable "data_subnet_1_cidr" {
+  description = "CIDR for the Data Subnet"
+  default     = "10.3.5.0/24"
+}
+
+variable "data_subnet_2_cidr" {
+  description = "CIDR for the Data Subnet"
+  default     = "10.3.6.0/24"
+}
+
+variable "example_ws_asg_name" {
+  description = "Name of the ASG belonging to the example webserver"
+  default     = "ws-example"
+}
+
+variable "example_ws_elb_name" {
+  description = "Name of the ELB belonging to the example webserver"
+  default     = "ws-example"
+}
+
+variable "example_ws_lc_name" {
+  description = "Name of the Launch Configuration for the example webserver"
+  default     = "ws-example"
 }
 

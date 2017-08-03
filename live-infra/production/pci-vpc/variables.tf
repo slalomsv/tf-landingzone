@@ -15,32 +15,32 @@ variable "vpc_cidr" {
 
 variable "dmz_subnet_1_cidr" {
   description = "CIDR for the DMZ Subnet"
-  default     = "10.2.7.0/24"
+  default     = "10.2.1.0/24"
 }
 
 variable "dmz_subnet_2_cidr" {
   description = "CIDR for the DMZ Subnet"
-  default     = "10.2.8.0/24"
+  default     = "10.2.2.0/24"
 }
 
 variable "app_subnet_1_cidr" {
   description = "CIDR for the Application Subnet"
-  default     = "10.2.9.0/24"
+  default     = "10.2.3.0/24"
 }
 
 variable "app_subnet_2_cidr" {
   description = "CIDR for the Application Subnet"
-  default     = "10.2.10.0/24"
+  default     = "10.2.4.0/24"
 }
 
 variable "data_subnet_1_cidr" {
   description = "CIDR for the Data Subnet"
-  default     = "10.2.11.0/24"
+  default     = "10.2.5.0/24"
 }
 
 variable "data_subnet_2_cidr" {
   description = "CIDR for the Data Subnet"
-  default     = "10.2.12.0/24"
+  default     = "10.2.6.0/24"
 }
 
 variable "example_ws_asg_name" {
