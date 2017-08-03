@@ -58,8 +58,8 @@ module "security_group_public" {
   vpc_id   = "${module.prod_standard_vpc.vpc_id}"
 }
 
-module "security_group_ssh" {
-  source   = "../../../modules/security-groups/ssh"
+module "security_group_ssh_public" {
+  source   = "../../../modules/security-groups/ssh-public"
   vpc_name = "${var.vpc_name}"
   vpc_id   = "${module.prod_standard_vpc.vpc_id}"
 }
@@ -95,7 +95,7 @@ module "bastion_asg" {
   source             = "../../../modules/services/bastion"
   vpc_name           = "${module.prod_standard_vpc.vpc_name}"
   key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
-  security_group_ids = "${module.security_group_ssh.security_group_id}"
+  security_group_ids = "${module.security_group_ssh_public.security_group_id}"
   asg_subnets        = "${module.prod_standard_vpc.dmz_subnet_1_id},${module.prod_standard_vpc.dmz_subnet_2_id}"
   max_size           = 3
   desired_capacity   = 2
@@ -108,7 +108,7 @@ module "example_ws" {
   elb_name            = "${var.example_ws_elb_name}"
   asg_name            = "${var.example_ws_asg_name}"
   lc_name             = "${var.example_ws_lc_name}"
-  lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh.security_group_id}"
+  lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh_public.security_group_id}"
   elb_security_groups = "${module.security_group_elb.security_group_id}"
   asg_subnets         = "${module.prod_standard_vpc.app_subnet_1_id},${module.prod_standard_vpc.app_subnet_2_id}"
   elb_subnets         = "${module.prod_standard_vpc.dmz_subnet_1_id},${module.prod_standard_vpc.dmz_subnet_2_id}"

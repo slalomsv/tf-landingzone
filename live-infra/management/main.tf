@@ -42,7 +42,7 @@ module "management_vpc" {
 ### Security Groups ###
 #######################
 module "security_group_ssh" {
-  source   = "../../modules/security-groups/ssh"
+  source   = "../../modules/security-groups/ssh-public"
   vpc_name = "${var.vpc_name}"
   vpc_id   = "${module.management_vpc.vpc_id}"
 }
@@ -72,21 +72,5 @@ module "bastion_asg" {
   max_size           = "${var.bastion_max_size}"
   desired_capacity   = "${var.bastion_desired_capacity}"
   min_size           = "${var.bastion_min_size}"
-}
-
-module "example_ws" {
-  source              = "../../modules/services/example-webserver"
-  vpc_name            = "${module.management_vpc.vpc_name}"
-  elb_name            = "${var.example_ws_elb_name}"
-  asg_name            = "${var.example_ws_asg_name}"
-  lc_name             = "${var.example_ws_lc_name}" 
-  lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh.security_group_id}"
-  elb_security_groups = "${module.security_group_elb.security_group_id}"
-  asg_subnets         = "${module.management_vpc.security_subnet_1_id},${module.management_vpc.security_subnet_2_id}"
-  elb_subnets         = "${module.management_vpc.public_subnet_1_id},${module.management_vpc.public_subnet_2_id}"
-  key_name            = "${data.terraform_remote_state.key_pairs.main_key_name}"
-  max_size            = 3
-  desired_capacity    = 2
-  min_size            = 1
 }
 
