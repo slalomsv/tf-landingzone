@@ -23,6 +23,15 @@ data "terraform_remote_state" "key_pairs" {
   }
 }
 
+data "terraform_remote_state" "management_vpc" {
+  backend = "s3"
+  config {
+    bucket = "tf-landingzone"
+    key    = "us-west-2/live-infra/management/terraform.tfstate"
+    region = "us-west-2"
+  }
+}
+
 
 ###########
 ### VPC ###
@@ -59,6 +68,23 @@ module "security_group_elb" {
   source   = "../../../modules/security-groups/elb"
   vpc_name = "${var.vpc_name}"
   vpc_id   = "${module.prod_standard_vpc.vpc_id}"
+}
+
+
+###################
+### VPC Peering ###
+###################
+module "management_vpc_peering" {
+  source              = "../../../modules/vpc-peering"
+  route_table_id      = "${module.prod_standard_vpc.public_route_table_id}"
+  vpc_id              = "${module.prod_standard_vpc.vpc_id}"
+  vpc_name            = "${module.prod_standard_vpc.vpc_name}"
+  vpc_cidr            = "${module.prod_standard_vpc.vpc_cidr}"
+  peer_route_table_id = "${data.terraform_remote_state.management_vpc.public_route_table_id}"
+  peer_id             = "${data.terraform_remote_state.management_vpc.vpc_id}"
+  peer_name           = "${data.terraform_remote_state.management_vpc.vpc_name}"
+  peer_cidr           = "${data.terraform_remote_state.management_vpc.vpc_cidr}"
+  bidirectional       = true
 }
 
 
