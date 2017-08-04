@@ -59,9 +59,17 @@ module "security_group_public" {
 }
 
 module "security_group_ssh_public" {
-  source   = "../../../modules/security-groups/ssh-public"
-  vpc_name = "${var.vpc_name}"
-  vpc_id   = "${module.stage_standard_vpc.vpc_id}"
+  source           = "../../../modules/security-groups/ssh-public"
+  vpc_name         = "${var.vpc_name}"
+  vpc_id           = "${module.stage_standard_vpc.vpc_id}"
+}
+
+module "security_group_ssh_private" {
+  source           = "../../../modules/security-groups/ssh-private"
+  vpc_name         = "${var.vpc_name}"
+  vpc_id           = "${module.stage_standard_vpc.vpc_id}"
+  local_vpc_cidr   = "${module.stage_standard_vpc.vpc_cidr}"
+  remote_vpc_cidrs = "${data.terraform_remote_state.management_vpc.vpc_cidr}"
 }
 
 module "security_group_elb" {
@@ -75,18 +83,18 @@ module "security_group_elb" {
 ### VPC Peering ###
 ###################
 module "management_vpc_peering" {
-  source              = "../../../modules/vpc-peering"
-  route_table_id      = "${module.stage_standard_vpc.public_route_table_id}"
-  vpc_id              = "${module.stage_standard_vpc.vpc_id}"
-  vpc_name            = "${module.stage_standard_vpc.vpc_name}"
-  vpc_cidr            = "${module.stage_standard_vpc.vpc_cidr}"
-  peer_route_table_id = "${data.terraform_remote_state.management_vpc.public_route_table_id}"
-  peer_id             = "${data.terraform_remote_state.management_vpc.vpc_id}"
-  peer_name           = "${data.terraform_remote_state.management_vpc.vpc_name}"
-  peer_cidr           = "${data.terraform_remote_state.management_vpc.vpc_cidr}"
-  bidirectional       = true
+  source                  = "../../../modules/vpc-peering/vpc-to-management"
+  vpc_name                = "${module.stage_standard_vpc.vpc_name}"
+  vpc_id                  = "${module.stage_standard_vpc.vpc_id}"
+  vpc_cidr                = "${module.stage_standard_vpc.vpc_cidr}"
+  dmz_route_table_id      = "${module.stage_standard_vpc.dmz_route_table_id}" 
+  app_route_table_id      = "${module.stage_standard_vpc.app_route_table_id}"
+  data_route_table_id     = "${module.stage_standard_vpc.data_route_table_id}"
+  management_id           = "${data.terraform_remote_state.management_vpc.vpc_id}"
+  management_cidr         = "${data.terraform_remote_state.management_vpc.vpc_cidr}"
+  public_route_table_id   = "${data.terraform_remote_state.management_vpc.public_route_table_id}" 
+  security_route_table_id = "${data.terraform_remote_state.management_vpc.security_route_table_id}"
 }
-
 
 ################
 ### Services ###
@@ -108,7 +116,7 @@ module "example_ws" {
   elb_name            = "${var.example_ws_elb_name}"
   asg_name            = "${var.example_ws_asg_name}"
   lc_name             = "${var.example_ws_lc_name}"
-  lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh_public.security_group_id}"
+  lc_security_groups  = "${module.security_group_public.security_group_id},${module.security_group_ssh_private.security_group_id}"
   elb_security_groups = "${module.security_group_elb.security_group_id}"
   asg_subnets         = "${module.stage_standard_vpc.app_subnet_1_id},${module.stage_standard_vpc.app_subnet_2_id}"
   elb_subnets         = "${module.stage_standard_vpc.dmz_subnet_1_id},${module.stage_standard_vpc.dmz_subnet_2_id}"

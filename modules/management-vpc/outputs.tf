@@ -38,3 +38,7 @@ output "public_route_table_id" {
   value = "${aws_route_table.public.id}"
 }
 
+output "security_route_table_id" {
+  value = "${aws_route_table.security.id}"
+}
+

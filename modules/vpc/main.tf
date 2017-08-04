@@ -106,7 +106,7 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-resource "aws_route_table" "public" {
+resource "aws_route_table" "dmz" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags {
@@ -115,19 +115,19 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route"  "public_route" {
-  route_table_id         = "${aws_route_table.public.id}"
+  route_table_id         = "${aws_route_table.dmz.id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.main.id}"
 }
 
 resource "aws_route_table_association" "dmz1" {
   subnet_id      = "${aws_subnet.dmz1.id}"
-  route_table_id = "${aws_route_table.public.id}"
+  route_table_id = "${aws_route_table.dmz.id}"
 }
 
 resource "aws_route_table_association" "dmz2" {
   subnet_id      = "${aws_subnet.dmz2.id}"
-  route_table_id = "${aws_route_table.public.id}"
+  route_table_id = "${aws_route_table.dmz.id}"
 }
 
 
@@ -143,7 +143,7 @@ resource "aws_nat_gateway" "main" {
   depends_on    = ["aws_internet_gateway.main"]
 }
   
-resource "aws_route_table" "nat" {
+resource "aws_route_table" "app" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags {
@@ -152,19 +152,19 @@ resource "aws_route_table" "nat" {
 }
 
 resource "aws_route"  "nat_route" {
-  route_table_id         = "${aws_route_table.nat.id}"
+  route_table_id         = "${aws_route_table.app.id}"
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${aws_nat_gateway.main.id}"
 }
 
 resource "aws_route_table_association" "app1" {
   subnet_id      = "${aws_subnet.app1.id}"
-  route_table_id = "${aws_route_table.nat.id}"
+  route_table_id = "${aws_route_table.app.id}"
 }
 
 resource "aws_route_table_association" "app2" {
   subnet_id      = "${aws_subnet.app2.id}"
-  route_table_id = "${aws_route_table.nat.id}"
+  route_table_id = "${aws_route_table.app.id}"
 }
 
 

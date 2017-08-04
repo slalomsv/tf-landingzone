@@ -46,12 +46,12 @@ output "eip_id" {
   value = "${aws_eip.main.id}"
 }
 
-output "public_route_table_id" {
-  value = "${aws_route_table.public.id}"
+output "dmz_route_table_id" {
+  value = "${aws_route_table.dmz.id}"
 }
 
-output "nat_route_table_id" {
-  value = "${aws_route_table.nat.id}"
+output "app_route_table_id" {
+  value = "${aws_route_table.app.id}"
 }
 
 output "data_route_table_id" {

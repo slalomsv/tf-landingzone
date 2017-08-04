@@ -58,6 +58,12 @@ module "security_group_pci" {
   vpc_id   = "${module.stage_pci_vpc.vpc_id}"
 }
 
+module "security_group_ssh_public" {
+  source           = "../../../modules/security-groups/ssh-public"
+  vpc_name         = "${var.vpc_name}"
+  vpc_id           = "${module.stage_pci_vpc.vpc_id}"
+}
+
 module "security_group_ssh_private" {
   source           = "../../../modules/security-groups/ssh-private"
   vpc_name         = "${var.vpc_name}"
@@ -77,18 +83,18 @@ module "security_group_elb" {
 ### VPC Peering ###
 ###################
 module "management_vpc_peering" {
-  source              = "../../../modules/vpc-peering"
-  route_table_id      = "${module.stage_pci_vpc.public_route_table_id}"
-  vpc_id              = "${module.stage_pci_vpc.vpc_id}"
-  vpc_name            = "${module.stage_pci_vpc.vpc_name}"
-  vpc_cidr            = "${module.stage_pci_vpc.vpc_cidr}"
-  peer_route_table_id = "${data.terraform_remote_state.management_vpc.public_route_table_id}"
-  peer_id             = "${data.terraform_remote_state.management_vpc.vpc_id}"
-  peer_name           = "${data.terraform_remote_state.management_vpc.vpc_name}"
-  peer_cidr           = "${data.terraform_remote_state.management_vpc.vpc_cidr}"
-  bidirectional       = true
+  source                  = "../../../modules/vpc-peering/vpc-to-management"
+  vpc_name                = "${module.stage_pci_vpc.vpc_name}"
+  vpc_id                  = "${module.stage_pci_vpc.vpc_id}"
+  vpc_cidr                = "${module.stage_pci_vpc.vpc_cidr}"
+  dmz_route_table_id      = "${module.stage_pci_vpc.dmz_route_table_id}" 
+  app_route_table_id      = "${module.stage_pci_vpc.app_route_table_id}"
+  data_route_table_id     = "${module.stage_pci_vpc.data_route_table_id}"
+  management_id           = "${data.terraform_remote_state.management_vpc.vpc_id}"
+  management_cidr         = "${data.terraform_remote_state.management_vpc.vpc_cidr}"
+  public_route_table_id   = "${data.terraform_remote_state.management_vpc.public_route_table_id}" 
+  security_route_table_id = "${data.terraform_remote_state.management_vpc.security_route_table_id}"
 }
-
 
 ################
 ### Services ###
@@ -97,7 +103,7 @@ module "bastion_asg" {
   source             = "../../../modules/services/bastion"
   vpc_name           = "${module.stage_pci_vpc.vpc_name}"
   key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
-  security_group_ids = "${module.security_group_ssh_private.security_group_id}"
+  security_group_ids = "${module.security_group_ssh_public.security_group_id}"
   asg_subnets        = "${module.stage_pci_vpc.dmz_subnet_1_id},${module.stage_pci_vpc.dmz_subnet_2_id}"
   max_size           = 3
   desired_capacity   = 2

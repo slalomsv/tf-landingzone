@@ -122,27 +122,27 @@ resource "aws_nat_gateway" "main" {
   depends_on    = ["aws_internet_gateway.main"]
 }
 
-resource "aws_route_table" "nat" {
+resource "aws_route_table" "security" {
   vpc_id = "${aws_vpc.management.id}"
   
   tags {
-    Name = "tf-${var.vpc_name}-private"
+    Name = "tf-${var.vpc_name}-security"
   }
 }
 
 resource "aws_route" "nat" {
-  route_table_id         = "${aws_route_table.nat.id}"
+  route_table_id         = "${aws_route_table.security.id}"
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${aws_nat_gateway.main.id}"
 }
 
 resource "aws_route_table_association" "nat1" {
   subnet_id      = "${aws_subnet.security1.id}"
-  route_table_id = "${aws_route_table.nat.id}"
+  route_table_id = "${aws_route_table.security.id}"
 }
 
 resource "aws_route_table_association" "nat2" {
   subnet_id      = "${aws_subnet.security2.id}"
-  route_table_id = "${aws_route_table.nat.id}"
+  route_table_id = "${aws_route_table.security.id}"
 }
 

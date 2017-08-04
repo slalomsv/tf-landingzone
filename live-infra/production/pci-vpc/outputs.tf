@@ -10,15 +10,15 @@ output "vpc_cidr" {
   value = "${var.vpc_cidr}"
 }
 
-output "public_route_table_id" {
-  value = "${module.prod_pci_vpc.public_route_table_id}"
+output "dmz_route_table_id" {
+  value = "${module.prod_pci_vpc.dmz_route_table_id}"
+}
+
+output "app_route_table_id" {
+  value = "${module.prod_pci_vpc.app_route_table_id}"
 }
 
 output "data_route_table_id" {
   value = "${module.prod_pci_vpc.data_route_table_id}"
-}
-
-output "nat_route_table_id" {
-  value = "${module.prod_pci_vpc.nat_route_table_id}"
 }
 
