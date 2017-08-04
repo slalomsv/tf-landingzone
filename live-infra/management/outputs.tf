@@ -14,3 +14,7 @@ output "public_route_table_id" {
   value = "${module.management_vpc.public_route_table_id}"
 }
 
+output "security_route_table_id" {
+  value = "${module.management_vpc.security_route_table_id}"
+}
+

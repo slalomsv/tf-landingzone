@@ -2,16 +2,36 @@ output "vpc_id" {
   value = "${aws_vpc.main.id}"
 }
 
-output "dmz_subnet_id" {
-  value = "${aws_subnet.dmz.id}"
+output "vpc_name" {
+  value = "${var.vpc_name}"
 }
 
-output "app_subnet_id" {
-  value = "${aws_subnet.app.id}"
+output "vpc_cidr" {
+  value = "${var.vpc_cidr}"
 }
 
-output "data_subnet_id" {
-  value = "${aws_subnet.data.id}"
+output "dmz_subnet_1_id" {
+  value = "${aws_subnet.dmz1.id}"
+}
+
+output "dmz_subnet_2_id" {
+  value = "${aws_subnet.dmz2.id}"
+}
+
+output "app_subnet_1_id" {
+  value = "${aws_subnet.app1.id}"
+}
+
+output "app_subnet_2_id" {
+  value = "${aws_subnet.app2.id}"
+}
+
+output "data_subnet_1_id" {
+  value = "${aws_subnet.data1.id}"
+}
+
+output "data_subnet_2_id" {
+  value = "${aws_subnet.data2.id}"
 }
 
 output "internet_gateway_id" {
@@ -26,19 +46,15 @@ output "eip_id" {
   value = "${aws_eip.main.id}"
 }
 
-output "public_route_table_id" {
-  value = "${aws_route_table.public.id}"
+output "dmz_route_table_id" {
+  value = "${aws_route_table.dmz.id}"
 }
 
-output "nat_route_table_id" {
-  value = "${aws_route_table.nat.id}"
+output "app_route_table_id" {
+  value = "${aws_route_table.app.id}"
 }
 
 output "data_route_table_id" {
   value = "${aws_route_table.data.id}"
-}
-
-output "vpc_cidr" {
-  value = "${var.vpc_cidr}"
 }
 
