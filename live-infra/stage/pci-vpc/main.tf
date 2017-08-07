@@ -99,17 +99,6 @@ module "management_vpc_peering" {
 ################
 ### Services ###
 ################
-module "bastion_asg" {
-  source             = "../../../modules/services/bastion"
-  vpc_name           = "${module.stage_pci_vpc.vpc_name}"
-  key_name           = "${data.terraform_remote_state.key_pairs.main_key_name}"
-  security_group_ids = "${module.security_group_ssh_public.security_group_id}"
-  asg_subnets        = "${module.stage_pci_vpc.dmz_subnet_1_id},${module.stage_pci_vpc.dmz_subnet_2_id}"
-  max_size           = 3
-  desired_capacity   = 2
-  min_size           = 1
-}
-
 module "example_ws" {
   source              = "../../../modules/services/example-webserver"
   vpc_name            = "${module.stage_pci_vpc.vpc_name}"
